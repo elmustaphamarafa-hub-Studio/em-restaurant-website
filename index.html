@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#e65100">
+
+    <title>E.M Restaurant | Good Food, Good Mood</title>
+
+    <meta name="description"
+          content="Order delicious Nigerian meals and pepper soup from E.M Restaurant.">
+
+    <style>
+        :root {
+            --primary: #e65100;
+            --primary-dark: #bf360c;
+            --cream: #fff8ef;
+            --brown: #38251b;
+            --muted: #766b63;
+            --white: #ffffff;
+            --border: #eee2d6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--cream);
+            color: var(--brown);
+            line-height: 1.6;
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .topbar {
+            background: var(--brown);
+            color: white;
+            text-align: center;
+            padding: 9px 12px;
+            font-size: 12px;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: white;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar {
+            max-width: 1100px;
+            margin: auto;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .brand {
+            color: var(--primary);
+            font-size: 21px;
+            font-weight: 900;
+        }
+
+        .brand span {
+            display: block;
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 2px;
+        }
+
+        .cart-button,
+        .primary-button {
+            border: none;
+            border-radius: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 17px;
+            font-weight: bold;
+        }
+
+        .cart-button {
+            border-radius: 30px;
+        }
+
+        .hero {
+            max-width: 1100px;
+            margin: auto;
+            padding: 48px 20px 35px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .eyebrow {
+            color: var(--primary);
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            font-size: clamp(35px, 6vw, 57px);
+            line-height: 1.12;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            color: var(--muted);
+            max-width: 490px;
+            margin-bottom: 22px;
+        }
+
+        .hero-art {
+            min-height: 250px;
+            border-radius: 24px;
+            background: linear-gradient(140deg, #ffcc80, #e65100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .hero-art .food-icons {
+            font-size: 76px;
+        }
+
+        .hero-art p {
+            color: white;
+            font-weight: bold;
+            margin: 8px 0 0;
+        }
+
+        .section {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px 20px 45px;
+        }
+
+        .section-heading {
+            margin-bottom: 22px;
+        }
+
+        .section-heading h2 {
+            font-size: 27px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .status-message {
+            padding: 14px;
+            border-radius: 8px;
+            background: white;
+            color: var(--muted);
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .status-message.error {
+            background: #fff0f0;
+            color: #a32222;
+        }
+
+        .categories {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 3px 0 20px;
+        }
+
+        .category-button {
+            flex-shrink: 0;
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 10px 18px;
+            background: white;
+            color: var(--brown);
+        }
+
+        .category-button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-art {
+            min-height: 125px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffead5;
+            font-size: 57px;
+        }
+
+        .product-content {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .product-content h3 {
+            font-size: 16px;
+            line-height: 1.4;
+            margin-bottom: 7px;
+        }
+
+        .product-content p {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 14px;
+        }
+
+        .product-bottom {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .price {
+            color: var(--primary-dark);
+            font-weight: 900;
+            font-size: 15px;
+        }
+
+        .add-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 7px;
+            padding: 8px 11px;
+            font-weight: bold;
+        }
+
+        .empty-message {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .features {
+            background: white;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .features-inner {
+            max-width: 1100px;
+            margin: auto;
+            padding: 28px 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .feature div {
+            font-size: 27px;
+        }
+
+        .feature h3 {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .feature p {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        footer {
+            background: var(--brown);
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+            font-size: 12px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        /* Shopping cart */
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: #0008;
+            z-index: 30;
+            display: none;
+        }
+
+        .overlay.open {
+            display: block;
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            height: 100%;
+            width: min(420px, 100%);
+            background: white;
+            z-index: 31;
+            padding: 20px;
+            overflow-y: auto;
+            transition: right 0.25s ease;
+        }
+
+        .cart-drawer.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close-button {
+            border: none;
+            background: #f4eee8;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            font-size: 21px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cart-item p {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .quantity-controls button {
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: white;
+        }
+
+        .cart-summary {
+            padding: 20px 0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 8px 0;
+        }
+
+        .summary-row.total {
+            font-size: 18px;
+            font-weight: 900;
+            border-top: 1px solid var(--border);
+            padding-top: 12px;
+        }
+
+        .cart-note {
+            background: #fff4e8;
+            color: #75401e;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 12px;
+            margin: 12px 0;
+        }
+
+        .checkout-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 700px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 35px;
+            }
+
+            .hero-art {
+                min-height: 170px;
+            }
+
+            .hero-art .food-icons {
+                font-size: 55px;
+            }
+
+            .menu-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .product-art {
+                min-height: 100px;
+                font-size: 45px;
+            }
+
+            .product-content {
+                padding: 11px;
+            }
+
+            .product-content h3 {
+                font-size: 14px;
+            }
+
+            .product-bottom {
+                align-items: start;
+                flex-direction: column;
+            }
+
+            .add-button {
+                width: 100%;
+            }
+
+            .section-heading h2 {
+                font-size: 23px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-inner {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+        🍲 Delicious Nigerian Meals • Freshly Prepared
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <a href="#" class="brand">
+                E.M RESTAURANT
+                <span>GOOD FOOD, GOOD MOOD</span>
+            </a>
+
+            <button class="cart-button" id="openCart">
+                🛒 Cart (<span id="cartCount">0</span>)
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div>
+                <div class="eyebrow">Welcome to E.M Restaurant</div>
+
+                <h1>Good food.<br>Great taste.<br><span>Every time.</span></h1>
+
+                <p>
+                    Enjoy delicious pepper soup and tasty Nigerian meals,
+                    prepared with care and served fresh.
+                </p>
+
+                <a href="#menu" class="primary-button">Explore Our Menu →</a>
+            </div>
+
+            <div class="hero-art">
+                <div>
+                    <div class="food-icons">🍲 🍛</div>
+                    <p>Freshly Prepared With Love</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="menu">
+            <div class="section-heading">
+                <h2>Our Menu</h2>
+                <p>Find your next favourite meal.</p>
+            </div>
+
+            <div id="menuStatus" class="status-message">
+                Connecting to E.M Restaurant menu...
+            </div>
+
+            <div id="categories" class="categories"></div>
+
+            <div id="menuGrid" class="menu-grid">
+                <div class="empty-message">Loading meals...</div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="features-inner">
+                <div class="feature">
+                    <div>🍲</div>
+                    <h3>Freshly Prepared</h3>
+                    <p>Meals made with care.</p>
+                </div>
+
+                <div class="feature">
+                    <div>🛵</div>
+                    <h3>Delivery Available</h3>
+                    <p>Delivery fee: ₦1,000.</p>
+                </div>
+
+                <div class="feature">
+                    <div>🧡</div>
+                    <h3>Made for You</h3>
+                    <p>Great food, every time.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p><strong>E.M Restaurant</strong></p>
+        <p>Good Food, Good Mood.</p>
+        <p>© <span id="year"></span> E.M Restaurant. All rights reserved.</p>
+    </footer>
+
+    <div class="overlay" id="cartOverlay"></div>
+
+    <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-button" id="closeCart" aria-label="Close cart">
+                ×
+            </button>
+        </div>
+
+        <div id="cartItems"></div>
+
+        <div id="cartFooter" style="display:none;">
+            <div class="cart-note">
+                Delivery costs ₦1,000. Takeaway and dine-in have no delivery fee.
+                Secure checkout will be added after we configure order processing.
+            </div>
+
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Food subtotal</span>
+                    <strong id="subtotal">₦0</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Delivery fee (delivery only)</span>
+                    <strong>₦1,000</strong>
+                </div>
+
+                <div class="summary-row total">
+                    <span>Food total</span>
+                    <span id="total">₦0</span>
+                </div>
+            </div>
+
+            <button class="primary-button checkout-button"
+                    style="width:100%;"
+                    disabled>
+                Checkout — Coming Soon
+            </button>
+        </div>
+    </aside>
+
+    <script type="module">
+        import { initializeApp } from
+            "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+
+        import {
+            getFirestore,
+            collection,
+            getDocs
+        } from
+            "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+        // E.M Restaurant Firebase web configuration.
+        const firebaseConfig = {
+            apiKey: "AIzaSyDaFNGEF1AGohJTpedAE5cJhPXPibEDhwA",
+            authDomain: "em-restaurant-online.firebaseapp.com",
+            projectId: "em-restaurant-online",
+            storageBucket: "em-restaurant-online.firebasestorage.app",
+            messagingSenderId: "543261008116",
+            appId: "1:543261008116:web:3fc1917a67eaad5410fea1",
+            measurementId: "G-8T8MJKZRH2"
+        };
+
+        const DELIVERY_FEE = 1000;
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let products = [];
+        let selectedCategory = "All";
+        let cart = [];
+
+        const menuGrid = document.getElementById("menuGrid");
+        const categoriesBox = document.getElementById("categories");
+        const menuStatus = document.getElementById("menuStatus");
+
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+
+        function formatNaira(amount) {
+            return "₦" + Number(amount || 0).toLocaleString("en-NG");
+        }
+
+        function escapeHTML(value) {
+            return String(value ?? "").replace(/[&<>"']/g, char => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            })[char]);
+        }
+
+        function productEmoji(name) {
+            const text = String(name).toLowerCase();
+
+            if (text.includes("pepper soup") || text.includes("catfish")) {
+                return "🍲";
+            }
+
+            if (text.includes("goat") || text.includes("meat")) {
+                return "🥘";
+            }
+
+            if (text.includes("rice")) {
+                return "🍛";
+            }
+
+            if (text.includes("chicken")) {
+                return "🍗";
+            }
+
+            if (text.includes("fish")) {
+                return "🐟";
+            }
+
+            return "🍽️";
+        }
+
+        async function loadMenu() {
+            try {
+                const [categorySnapshot, productSnapshot] = await Promise.all([
+                    getDocs(collection(db, "categories")),
+                    getDocs(collection(db, "products"))
+                ]);
+
+                const categories = categorySnapshot.docs
+                    .map(doc => ({ id: doc.id, ...doc.data() }))
+                    .filter(category => category.active !== false)
+                    .sort((a, b) =>
+                        Number(a.sortOrder || 0) - Number(b.sortOrder || 0)
+                    );
+
+                products = productSnapshot.docs
+                    .map(doc => ({ id: doc.id, ...doc.data() }))
+                    .filter(product => product.available === true)
+                    .filter(product =>
+                        typeof product.name === "string" &&
+                        Number.isFinite(Number(product.price)) &&
+                        Number(product.price) >= 0
+                    );
+
+                renderCategories(categories);
+                renderProducts();
+
+                menuStatus.textContent = products.length
+                    ? "Choose a meal and add it to your cart."
+                    : "No available meals found. Check your products in Firebase.";
+
+            } catch (error) {
+                console.error("Menu loading error:", error);
+
+                menuStatus.classList.add("error");
+                menuStatus.textContent =
+                    "Unable to load the menu. Check your Firebase connection and Firestore read permissions.";
+
+                menuGrid.innerHTML = `
+                    <div class="empty-message">
+                        The menu is temporarily unavailable.
+                        Please try again later.
+                    </div>
+                `;
+            }
+        }
+
+        function renderCategories(categories) {
+            const names = [
+                "All",
+                ...categories.map(category => category.name).filter(Boolean)
+            ];
+
+            categoriesBox.innerHTML = names.map(name => `
+                <button
+                    class="category-button ${name === selectedCategory ? "active" : ""}"
+                    data-category="${escapeHTML(name)}">
+                    ${escapeHTML(name)}
+                          
+                    </button>
+                `).join("");
+
+                categoriesBox.querySelectorAll("button").forEach(button => {
+                    button.addEventListener("click", () => {
+                        selectedCategory = button.dataset.category;
+
+                        categoriesBox.querySelectorAll("button").forEach(item => {
+                            item.classList.toggle(
+                                "active",
+                                item.dataset.category === selectedCategory
+                            );
+                        });
+
+                        renderProducts();
+                    });
+                });
+            }
+
+            function renderProducts() {
+                const visibleProducts = products.filter(product =>
+                    selectedCategory === "All" ||
+                    product.category === selectedCategory
+                );
+
+                if (!visibleProducts.length) {
+                    menuGrid.innerHTML = `
+                        <div class="empty-message">
+                            No meals are available in this category yet.
+                        </div>
+                    `;
+                    return;
+                }
+
+                menuGrid.innerHTML = visibleProducts.map(product => `
+                    <article class="product-card">
+                        <div class="product-art">
+                            ${productEmoji(product.name)}
+                        </div>
+
+                        <div class="product-content">
+                            <h3>${escapeHTML(product.name)}</h3>
+
+                            <p>${escapeHTML(
+                                product.description || "Freshly prepared for you."
+                            )}</p>
+
+                            <div class="product-bottom">
+                                <span class="price">
+                                    ${formatNaira(product.price)}
+                                </span>
+
+                                <button
+                                    class="add-button"
+                                    data-product-id="${escapeHTML(product.id)}">
+                                    + Add
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                `).join("");
+
+                menuGrid.querySelectorAll(".add-button").forEach(button => {
+                    button.addEventListener("click", () => {
+                        addToCart(button.dataset.productId);
+                    });
+                });
+            }
+
+            function addToCart(productId) {
+                const product = products.find(item => item.id === productId);
+
+                if (!product) return;
+
+                const existing = cart.find(item => item.id === productId);
+
+                if (existing) {
+                    existing.quantity += 1;
+                } else {
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: Number(product.price),
+                        quantity: 1
+                    });
+                }
+
+                renderCart();
+                openCart();
+            }
+
+            function changeQuantity(productId, change) {
+                const item = cart.find(product => product.id === productId);
+
+                if (!item) return;
+
+                item.quantity += change;
+
+                if (item.quantity <= 0) {
+                    cart = cart.filter(product => product.id !== productId);
+                }
+
+                renderCart();
+            }
+
+            function renderCart() {
+                const count = cart.reduce(
+                    (sum, item) => sum + item.quantity, 0
+                );
+
+                const subtotal = cart.reduce(
+                    (sum, item) => sum + item.price * item.quantity, 0
+                );
+
+                document.getElementById("cartCount").textContent = count;
+
+                document.getElementById("subtotal").textContent =
+                    formatNaira(subtotal);
+
+                document.getElementById("total").textContent =
+                    formatNaira(subtotal);
+
+                document.getElementById("cartFooter").style.display =
+                    cart.length ? "block" : "none";
+
+                if (cart.length === 0) {
+                    document.getElementById("cartItems").innerHTML = `
+                        <div class="empty-message">
+                            Your cart is empty. Add a meal to get started.
+                        </div>
+                    `;
+                    return;
+                }
+
+                document.getElementById("cartItems").innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${escapeHTML(item.name)}</strong>
+                            <p>${formatNaira(item.price)} each</p>
+
+                            <div class="quantity-controls">
+                                <button
+                                    data-id="${escapeHTML(item.id)}"
+                                    data-change="-1">−</button>
+
+                                <span>${item.quantity}</span>
+
+                                <button
+                                    data-id="${escapeHTML(item.id)}"
+                                    data-change="1">+</button>
+                            </div>
+                        </div>
+
+                        <strong>
+                            ${formatNaira(item.price * item.quantity)}
+                        </strong>
+                    </div>
+                `).join("");
+
+                document.querySelectorAll(".quantity-controls button")
+                    .forEach(button => {
+                        button.addEventListener("click", () => {
+                            changeQuantity(
+                                button.dataset.id,
+                                Number(button.dataset.change)
+                            );
+                        });
+                    });
+            }
+
+            function openCart() {
+                document.getElementById("cartDrawer").classList.add("open");
+                document.getElementById("cartOverlay").classList.add("open");
+            }
+
+            function closeCart() {
+                document.getElementById("cartDrawer").classList.remove("open");
+                document.getElementById("cartOverlay").classList.remove("open");
+            }
+
+            document.getElementById("openCart")
+                .addEventListener("click", openCart);
+
+            document.getElementById("closeCart")
+                .addEventListener("click", closeCart);
+
+            document.getElementById("cartOverlay")
+                .addEventListener("click", closeCart);
+
+            loadMenu();
+        </script>
+    </body>
+    </html>
